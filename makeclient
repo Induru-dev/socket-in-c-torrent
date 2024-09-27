@@ -1,0 +1,9 @@
+client.out: client.o recv_file.o
+	cc -o client.out client.o recv_file.o
+
+client.o: client.c sock.h
+	cc -c client.c
+
+recv_file.o: recv_file.c sock.h
+	cc -c recv_file.c
+

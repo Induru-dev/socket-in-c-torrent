@@ -1,0 +1,14 @@
+server.out: server.o sig_child.o send_list.o send_file.o
+	cc -o server.out server.o sig_child.o send_list.o send_file.o
+
+server.o: server.c sock.h
+	cc -c server.c
+
+sig_child.o: sig_child.c sock.h
+	cc -c sig_child.c
+
+send_list.o: send_list.c sock.h
+	cc -c send_list.c
+
+send_file.o: send_file.c sock.h
+	cc -c send_file.c
