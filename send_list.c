@@ -24,6 +24,7 @@ void send_list(int sockfd){
 			
 			//1. file.mp4 widihata hadanawa file_entry eka athule 
             		snprintf(file_entry, sizeof(file_entry), "%d. %s\n", file_number, de->d_name);
+
             		strcat(file_list, file_entry);
             		file_number++;
 

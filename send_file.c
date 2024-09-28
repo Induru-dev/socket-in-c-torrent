@@ -1,6 +1,6 @@
 #include "sock.h"
 
-void send_file(FILE *fp, int sockfd){
+int send_file(FILE *fp, int sockfd){
 
 	char data[BUFFER_SIZE];
 	long file_size;
@@ -30,6 +30,8 @@ void send_file(FILE *fp, int sockfd){
 	printf("File sent successfully\n");
 
 	shutdown(sockfd, SHUT_WR);  // Close write-side of socket to signal end of transfer
+
+	return 0;
 
 
 }

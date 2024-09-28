@@ -5,7 +5,7 @@ int main(int argc, char **argv){
 
         int listenfd;
 	int connfd[MAX_CLIENTS];
-	int i=0;
+	int i=0,trans_status;
 	pid_t	childpid;
 	socklen_t clilen;
 	const char *ptr;
@@ -13,12 +13,20 @@ int main(int argc, char **argv){
 	char buffer[BUFFER_SIZE];
 	char file_name[BUFFER_SIZE];
 	FILE *fp;
+	FILE *log_file;
 	char *direc = "/home/induru/Documents/files";
 	
 	
 
 	//creating socket addrr stucture
         struct sockaddr_in servsock, clisock;
+
+	//open log file
+	log_file = fopen("server_log.txt", "a");
+    	if (log_file == NULL) {
+        	perror("Failed to open log file");
+        	exit(1);
+    	}
 	
 	//creating socket
         if ((listenfd = socket(AF_INET, SOCK_STREAM, 0)) < 0 ){
@@ -112,7 +120,9 @@ int main(int argc, char **argv){
 					if (file_count == file_number){ 
 						
 						char full_path[BUFFER_SIZE];
-            					snprintf(full_path, sizeof(full_path), "%s/%s", direc, de->d_name); //get file name from de and append it with folder path
+
+						//get file name from de and append it with folder path
+            					snprintf(full_path, sizeof(full_path), "%s/%s", direc, de->d_name); 
 
 						//open file
             					fp = fopen(full_path, "rb");
@@ -136,7 +146,9 @@ int main(int argc, char **argv){
 			}
 
 			//sending file
-			send_file(fp,connfd[i]);
+			trans_status = send_file(fp,connfd[i]);
+
+			log_info(log_file, &clisock, file_name, trans_status);
 
 			fclose(fp);
 			close(connfd[i]);						
