@@ -151,8 +151,9 @@ int main(int argc, char **argv){
 			log_info(log_file, &clisock, file_name, trans_status);
 
 			fclose(fp);
-			close(connfd[i]);						
-	
+			close(connfd[i]);
+			exit(0);						
+		
 		}
 		
 		close(connfd[i]);
